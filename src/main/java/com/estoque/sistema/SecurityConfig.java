@@ -17,11 +17,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable()) // <--- AQUI A CORREÇÃO: Libera o envio de formulários
                 .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().authenticated() // Exige senha para tudo
+                        .anyRequest().authenticated() // Continua exigindo senha para entrar
                 )
                 .formLogin((form) -> form
-                        .defaultSuccessUrl("/produtos", true) // Vai para produtos após logar
+                        .defaultSuccessUrl("/produtos", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
@@ -31,7 +32,6 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        // Define usuário e senha
         UserDetails user =
                 User.withDefaultPasswordEncoder()
                         .username("admin")
