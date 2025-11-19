@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clientes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="#">Sistema Estoque</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/produtos">Produtos</a></li>
+            <li class="nav-item"><a class="nav-link" href="/fornecedores">Fornecedores</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/clientes">Clientes</a></li>
+        </ul>
+        <a href="/logout" class="btn btn-outline-light btn-sm">Sair</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Gerenciar Clientes</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="/clientes/salvar" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" name="nome" class="form-control" placeholder="Nome Cliente" required>
+                    </div>
+                    <div class="col">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="col">
+                        <input type="text" name="cidade" class="form-control" placeholder="Cidade">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Cidade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${lista}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.nome}"></td>
+            <td th:text="${item.email}"></td>
+            <td th:text="${item.cidade}"></td>
+            <td>
+                <a th:href="@{/clientes/editar/{id}(id=${item.id})}" class="btn btn-primary btn-sm">Editar</a>
+                <a th:href="@{/clientes/excluir/{id}(id=${item.id})}" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
